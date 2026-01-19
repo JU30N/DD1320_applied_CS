@@ -17,6 +17,8 @@ class LinkedQ:
     def __init__(self):
         self._first = None
         self._last = None
+
+        #privata klass gör att q._first = 2 detta är inte möjligt och man kan ej byta från utsidan
         
     def enqueue(self, item):
 
