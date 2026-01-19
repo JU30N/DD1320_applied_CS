@@ -18,12 +18,86 @@ class LinkedQ:
         self._first = None
         self._last = None
         
-    def enqueue(self):
-        pass
+    def enqueue(self, item):
 
-    def dequeue(self):
-        pass
+        # första enqueue(1) -> self._first = none och newnode = (D= 1 N= None) 
+        # ->self.first = newnode med (D= 1 N = None)
+        #self.first och self.last -> newnode(D=1, N=None)
+        #
+        #enqueure(2)
+        #
+        #newnode = (D=2 N=None)
+        #self.last.next = newnode -> (D=1 N=None) blir till (D=1 N=newnode) där newnode är (D=2 N= None)
+        #self.last = newnode -> self.last pekar på D=2 N=None 
+        #
+
+
+        new_node = Node(item)
+
+        if self._first is None:
+            self._first = new_node
+            self._last = new_node
+
+        else:
+            self._last.next = new_node
+            self._last = new_node
+
+        
+
+    def dequeue(self):#ta bort första item i listan
+
+        #dequeue()
+        #1 = self.first.getvalue <- (D=1 N=node2 )
+        #node2 = (D=2 N=none)
+        #nya första = nästa av gamla första så 
+        #self.first -> (D=1 N=node2)
+        #self.first -> (node2)->(D=2 N = node3)
+        if self._first is None:
+            return None
+        else:
+            data_return = self._first.get_value()
+            self._first = self._first.next
+        return data_return
     
     def get_size(self):
-        pass
+        size_counter = 0
+        current = self._first
 
+        while current is not None:
+            size_counter += 1
+            current = current.next
+        return size_counter
+
+
+    def isEmpty(self):
+        if self._first is None:
+            return True
+        else:
+            return False
+
+    def get_items(self):
+        items_list = []
+        current = self._first
+
+        while current is not None:
+            items_list.append(current.value)
+            current = current.next
+
+        for i in range(0, len(items_list)):
+            #print(items_list[i])
+            print(items_list[i], end=" ")
+        
+
+def main():
+    q = LinkedQ()
+    q.enqueue(1)
+    q.enqueue(2)
+    q.enqueue(3)
+    print(q.get_items())
+    #print(q.get_size())
+    print(q.dequeue())
+    print(q.dequeue())
+    
+
+    
+#main()

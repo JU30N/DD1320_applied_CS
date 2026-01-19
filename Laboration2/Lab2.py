@@ -1,16 +1,22 @@
-from arrayQFile import ArrayQ
+#from arrayQFile import ArrayQ
+from linkedQFile import LinkedQ
+import sys
+
 
 def card_trick():
-    print("Vilken ordning ligger korten i?")
+    #print("Vilken ordning ligger korten i?")
     #numbers = input().split()
-    numbers = "3 1 4 2 5"
+    numbers = sys.stdin.readline()
+    #numbers = "3 1 4 2 5"
     numbers = numbers.split()
     #print(numbers)
-    q = ArrayQ()
-    card_r = ArrayQ()
+    #q = ArrayQ()
+    #card_r = ArrayQ()
+    q = LinkedQ()
+    card_r = LinkedQ()
     for x in numbers:
-        q.enqueue(int(x))
-    q.get_items()
+        q.enqueue((x))
+    #q.get_items()
     #print(q.get_size())
 
     while q.get_size() > 0: 
@@ -22,7 +28,7 @@ def card_trick():
         card_r.enqueue(second_num)
         #q.print_queue()
     
-    print(card_r.get_items())
+    card_r.get_items()
 
 def main():
     card_trick()
