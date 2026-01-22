@@ -24,14 +24,22 @@ def skriv(node):# Skriver ut trädet i inorder vänster till höger
         skriv(node.right)
 
 def putta(node, value):#value 1) kolla om den finns eller ej 2) kolla vart man ska lägga in den
+#           8
+#         3  
+#putta(8, 1) -> inte tomt och 8 > 1 så left -> nodeleft = 3 putta(3, 1)
+#
+#putta(3, 1)-> mindre -> (gå till putta(none, 1) -> nya nodeleft för 3an = putta(None, 1) == Node(1)
+# 
+# putta(None, 1) -> None -> return Node(1)           
+#         
     if node == None:
         return Node(value, None, None)
     
     if value < node.data:#om mindre sätt till vänster
-        node.left = Node(value, None, None)
+        node.left = putta(node.left, value)#koll
     
     elif value > node.data:
-        node.right = Node(value, None, None)
+        node.right = putta(node.right, value)
     
     return node
 
@@ -65,10 +73,9 @@ class Bintree:
 
     def __contains__(self,value):
         # True om value finns i trädet, False annars
-        return finns(self.root,value)
+        return finns(self.root, value)
 
     def write(self):
         # Skriver ut trädet i inorder
-        print(self.root)
         skriv(self.root)
         print("\n")
