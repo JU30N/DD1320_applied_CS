@@ -2,14 +2,40 @@
 
 
 
-def finns(self):
-        pass
+def finns(node, value):# True om value finns i trädet, False annars
+    if node == None:#finns fler ställen att leta
+        return False
+    
+    if node.data == value:#hittat
+        return True
 
-def skriv(self):
-    pass 
+    elif value < node.data:#kolla vänster
+        return finns(node.left, value)
+    else:#kolla höger
+        return finns(node.right, value)
 
-def putta(self):
-    pass
+
+def skriv(node):# Skriver ut trädet i inorder vänster till höger
+    if node != None:#hitta där det är en leaf
+        #gå vänster kolla vänster, om vänster är klar skriv ut data och 
+        #gå höger när det är klar gå tillbaka
+        skriv(node.left)
+        print(node.data)
+        skriv(node.right)
+
+def putta(node, value):#value 1) kolla om den finns eller ej 2) kolla vart man ska lägga in den
+    if node == None:
+        return Node(value, None, None)
+    
+    if value < node.data:#om mindre sätt till vänster
+        node.left = Node(value, None, None)
+    
+    elif value > node.data:
+        node.right = Node(value, None, None)
+    
+    return node
+
+
 
 class Node:
     def __init__(self, data, left = None, right = None):
@@ -35,7 +61,7 @@ class Bintree:
 
     def put(self,newvalue):
         # Sorterar in newvalue i trädet
-        self.root = putta(self.root,newvalue)
+        self.root = putta(self.root , newvalue)
 
     def __contains__(self,value):
         # True om value finns i trädet, False annars
@@ -43,6 +69,6 @@ class Bintree:
 
     def write(self):
         # Skriver ut trädet i inorder
+        print(self.root)
         skriv(self.root)
         print("\n")
-

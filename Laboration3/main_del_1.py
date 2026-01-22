@@ -1,5 +1,12 @@
 from bintreeFile import Bintree
 
+#ensam
+##
+#ensam
+#tillsammans
+##
+
+
 def makeTree():
     tree = Bintree()
     data = input().strip()
