@@ -1,6 +1,9 @@
 from bintreeFile_lab4 import Bintree
+from linkedQFile import LinkedQ
+
 svenska = Bintree()
 gamla = Bintree()
+q = LinkedQ()
 
 with open("/Users/ju30n/DD1320_applied_CS/Laboration4/word3.txt", "r", encoding = "utf-8") as svenskfil:
     for rad in svenskfil:
@@ -45,7 +48,12 @@ def main():
     #start_word = input("Start ord: ")
     start_word = "söt"
     #end_word = input("Slut ord: ")
-    makechildren(start_word)
-    
+    q = LinkedQ()
+    q.enqueue(start_word)
+    gamla.put(start_word)
+    #makechildren(start_word)
+    while not q.isEmpty():
+        nod = q.dequeue()
+        makechildren(nod, q) # Skicka med q så funktionen kan lägga in nya barn
 
 main()
