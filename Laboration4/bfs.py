@@ -52,10 +52,13 @@ def makechildren(start_word, end_word, q):
                 #print(new_word)
                 gamla.put(new_word)#lägg till att vi har besökt detta ord 
 
-                if new_word == end_word:#hittat
-                    return True
+                # if new_word == end_word:#hittat
+                #     return True
 
                 q.enqueue(new_word)#kolla denna bit och söker senare vidare [gul,jul,kul]
+
+            if new_word == end_word:#hittat
+                return True
 
         start_word_list[i] = original_char
 
@@ -65,7 +68,7 @@ def makechildren(start_word, end_word, q):
 def main():
     
     #start_word = input("Start ord: ")
-    starting_word = "luv"
+    starting_word = "sov"
     #ending_word = input("Slut ord: ")
     end_wording = "soa"
     q = LinkedQ()
@@ -74,6 +77,7 @@ def main():
     #makechildren(start_word)
     while not q.isEmpty():
         word = q.dequeue()#ful
+        #gamla.put(word)
         foundword = makechildren(word, end_wording, q) #ställen den har varit på och första som finns i listan
         if foundword:#kolla om hittat ordet
             break
