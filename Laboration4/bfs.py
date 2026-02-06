@@ -4,7 +4,7 @@ from linkedQFile import LinkedQ
 svenska = Bintree()#svenska tre bokstäver ord 
 gamla = Bintree()#besökta ställen 
 
-with open("C:/Users/joong/Desktop/DD1320/DD1320_applied_CS/Laboration4/word3.txt", "r", encoding="utf-8") as svenskfil:
+with open("/Users/ju30n/DD1320_applied_CS/Laboration4/word3.txt", "r", encoding = "utf-8") as svenskfil:
     for rad in svenskfil:
         ordet = rad.strip()                # Ett trebokstavsord per rad
         #print(ordet)
@@ -19,7 +19,7 @@ with open("C:/Users/joong/Desktop/DD1320/DD1320_applied_CS/Laboration4/word3.txt
 #ordlistan men inte finns i gamla och i så fall skriva ut det nya ordet på
 #skärmen och lägga in det i gamla.
 
-def makechildren(start_word, end_word, q):
+def makechildren(start_word):
     
     alfabeth = "abcdefghijklmnopqrstuvwxyzåäö"
     start_word_list = list(start_word)
@@ -35,14 +35,10 @@ def makechildren(start_word, end_word, q):
             start_word_list[i] = letter#letter = a -> s = a
             new_word = "".join(start_word_list)#join till aöt
 
-            if (new_word in svenska) and (new_word not in gamla):#kolla om den finns här eller inte
-                #print(new_word)
+            if new_word in svenska and new_word not in gamla:
+                print(new_word)
                 gamla.put(new_word)
-
-                if new_word == end_word:#hittat
-                    return True
-
-                q.enqueue(new_word)#kolla denna bit och söker senare vidare [gul,jul,kul]
+                
 
         start_word_list[i] = original_char
 
@@ -52,22 +48,14 @@ def makechildren(start_word, end_word, q):
 def main():
     
     #start_word = input("Start ord: ")
-    starting_word = "ska"
-    #ending_word = input("Slut ord: ")
-    end_wording = "luv"
+    start_word = "söt"
+    #end_word = input("Slut ord: ")
     q = LinkedQ()
     q.enqueue(starting_word)
     gamla.put(starting_word)
     #makechildren(start_word)
     while not q.isEmpty():
-        word = q.dequeue()#ful
-        foundword = makechildren(word, end_wording, q) #ställen den har varit på och första som finns i listan
-        if foundword:#om detta är true printa lösningen
-            break
-
-    if foundword == None:
-        print("Ingen väg hittades")
-    else:
-        print(f"Det hittades lösning mellan {starting_word} och {end_wording}")
+        nod = q.dequeue()
+        makechildren(nod, q) # Skicka med q så funktionen kan lägga in nya barn
 
 main()

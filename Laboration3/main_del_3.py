@@ -1,7 +1,7 @@
 from bintreeFile import Bintree
 svenska = Bintree()
 
-with open("c:/Users/joong/Desktop/DD1320/DD1320_applied_CS/Laboration3/word3.txt", "r", encoding = "utf-8") as svenskfil:
+with open("/Users/ju30n/DD1320_applied_CS/Laboration4/word3.txt", "r", encoding = "utf-8") as svenskfil:
     for rad in svenskfil:
         ordet = rad.strip()                # Ett trebokstavsord per rad
         #print(ordet)
@@ -14,7 +14,7 @@ with open("c:/Users/joong/Desktop/DD1320/DD1320_applied_CS/Laboration3/word3.txt
 #print("\n")
 
 english = Bintree()
-with open("c:/Users/joong/Desktop/DD1320/DD1320_applied_CS/Laboration3/engelska.txt", "r", encoding = "utf-8") as engfil:
+with open("/Users/ju30n/DD1320_applied_CS/Laboration3/engelska.txt", "r", encoding = "utf-8") as engfil:
     for row in engfil:
         words = row.split()
         #print(words)
