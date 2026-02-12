@@ -29,7 +29,7 @@ def writechain(node):#newnode => word = son och parent = sov
                 # print(word = sov)
                      #print(word = son)
     if node.parent is not None:
-        writechain(node.parent)#
+        writechain(node.parent)
     print(node.word)
 
 def makechildren(start_node, end_word, q):#sov, blå, tom
@@ -39,12 +39,15 @@ def makechildren(start_node, end_word, q):#sov, blå, tom
     start_word_list = list(start_node_word)
     #print(start_node_word)
     #print(start_word_list)
-
+    if start_node_word == end_word:
+                writechain(start_node)#newnode => word = son och parent = sov
+                raise SolutionFound
+    
     for i in range(len(start_word_list)):
         original_char = start_word_list[i]
 
         for letter in alfabeth:
-            
+
             if letter == original_char:
                 continue
 
@@ -56,12 +59,9 @@ def makechildren(start_node, end_word, q):#sov, blå, tom
                 gamla.put(new_word)
 
                 new_node = ParentNode(new_word, start_node)# newnode => word = son och parent = sov
-
-                if new_word == end_word:
-                    writechain(new_node)#newnode => word = son och parent = sov
-                    raise SolutionFound
-
                 q.enqueue(new_node)
+            
+            
 
         start_word_list[i] = original_char
 
@@ -71,9 +71,9 @@ def makechildren(start_node, end_word, q):#sov, blå, tom
 
 def main():
     #start_word = input("Start ord: ")
-    starting_word = "sov"
+    starting_word = "söt"
     #ending_word = input("Slut ord: ")
-    end_wording = "får"
+    end_wording = "sur"
     q = LinkedQ()
     
     root = ParentNode(starting_word)# Parent node utan parent men har ett word = sov

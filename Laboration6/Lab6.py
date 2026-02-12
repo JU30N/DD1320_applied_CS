@@ -7,12 +7,12 @@ class Song:
         self.artistname = artistname
         self.title = title
 
-    def __It__(self, other):
+    def __lt__(self, other):
         return self.artistname < other.artistname
     
 def readfile():
     song_list = []
-    with open("C:\\Users\\joong\\Desktop\\DD1320\\DD1320_applied_CS\\Laboration6\\unique_tracks.txt", "r", encoding="utf-8") as file:        
+    with open("/Users/ju30n/DD1320_applied_CS/Laboration6/unique_tracks.txt", "r", encoding="utf-8") as file:        
         for line in file:
             part = line.strip().split("<SEP>")
                                 #trackid , songtime artistname title
@@ -83,74 +83,63 @@ def partitionera(data, v, h, pivot_name):
     return i + 1    #nästa placerings steg 
 
 
-#delar tills bara ett element kvar - jämför element mot element och sedan bygg en ny lista -  b c / a d 
-#b vs a - a minst lägg till i listan - b vs c 
 
-#i vänster j höger k ? lista 
-def mergesort(lista):
-    if len(lista) > 1:
-        mitten = len(lista) // 2
-        vensterHalva = lista[:mitten]
-        hogerHalva = lista[mitten:]
+def selectionSort(alist):#tagen från boken med ändringar så den passar till mitt program
+    for fillslot in range(len(alist)-1, 0, -1):#letar efter största värde
+        positionOfMax = 0
+        for location in range(1, fillslot + 1):#kollar mellan index 1 och fillslot + 1
+            if alist[positionOfMax] < alist[location]:#om man hittar något större så byt platserna
+                positionOfMax = location
 
-        mergesort(vensterHalva)
-        mergesort(hogerHalva)
-
-        i = j = k = 0
-
-        while i < len(vensterHalva) and j < len(hogerHalva):
-            if vensterHalva[i].artistname < hogerHalva[j].artistname:#jämför först i kön
-                lista[k] = vensterHalva[i]#vänster större
-                i += 1#gå till nästa artist i vänster lista 
-            else:
-                lista[k] = hogerHalva[j]#höger större
-                j += 1
-            k += 1
-
-        while i < len(vensterHalva):#kollar om det finns något kvar 
-            lista[k] = vensterHalva[i]
-            i += 1
-            k += 1
-
-        while j < len(hogerHalva):
-            lista[k] = hogerHalva[j]
-            j += 1
-            k += 1
+        alist[fillslot], alist[positionOfMax] = alist[positionOfMax], alist[fillslot]#här byts platserna
 
 def main():
 
-    lista = readfile()
-    n = len(lista)
+    n = 1000000
+
+
+    storLista = readfile()
+    mindreLista = storLista[0:n]
     #print("Antal element =", n)
+    sorterings_lista_q = mindreLista.copy()
+    sorterings_lista_s = mindreLista.copy()
 
-    hash_with_dict = hashSearch(lista)
+    hash_with_dict = hashSearch(mindreLista)
 
-    sista = lista[n-1]
+    sista = mindreLista[n-1]
     testartist = sista.artistname
+    #print(testartist)
 
-    # linjtid = timeit.timeit(stmt = lambda: linsok(lista, testartist), number = 100000)
+    # linjtid = timeit.timeit(stmt = lambda: linsok(mindreLista, testartist), number = 10000)
     # print("Linjärsökningen tog", round(linjtid, 4) , "sekunder")
 
-    # binartid = timeit.timeit(stmt = lambda: binarySearch(lista, testartist), number = 100000)
+    # binartid = timeit.timeit(stmt = lambda: binarySearch(mindreLista, testartist), number = 10000)
     # print("Binärasökningen tog", round(binartid, 4) , "sekunder")
 
-    # hashtid = timeit.timeit(stmt = lambda: hash_with_dict.get(testartist), number = 100000)
+    # hashtid = timeit.timeit(stmt = lambda: hash_with_dict.get(testartist), number = 10000)
     # print("hash tog", round(hashtid, 4) , "sekunder")
-    test_storlek = 10000000
-    mindre_lista = lista[:test_storlek]
     
-    # Skapa en kopia så vi inte förstör ursprungslistan
-    sorterings_lista = mindre_lista.copy()
     
-    print("Antal element =", test_storlek)
+    #kopia så vi inte förstör ursprungslistan    
 
-    # NU skickar vi listan till quicksort
-    t_quick = timeit.timeit(lambda: quicksort(sorterings_lista), number=1)#normalt nlogn men värsta fall n^2
-        
-    t_merge = timeit.timeit(lambda: mergesort(sorterings_lista), number=1)#tid alltid på nlogn
-    print(f"{round(t_quick, 5)} s | {round(t_merge, 5)} s")
+    t_quick = timeit.timeit(lambda: quicksort(sorterings_lista_q), number=1)#n log n
+    print(t_quick)
+    t_select = timeit.timeit(lambda: selectionSort(sorterings_lista_s), number=1)#n^2
+    print(t_select)
 
 
 
 main()
 #med tid och det stämmer det eftersom lin > binar > hash i tid
+
+#   n = 250 000     n = 500 000         n = 1 000 000
+#L  8.5             0.48                0.0818
+#B  0.013           0.0131              0.0141
+#H  0.0004          0.0004              0.0004
+#
+#   n = 1000        n=10000         n=100000        n=1000000
+#q  0.00066         0.00918         0.13436         2.678
+#s  0.03181         3.7236          tog för lång tid mer än 5 min 
+#
+#
+
