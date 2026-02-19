@@ -12,10 +12,11 @@ class Song:
     
 def readfile():
     song_list = []
-    with open("/Users/ju30n/DD1320_applied_CS/Laboration6/unique_tracks.txt", "r", encoding="utf-8") as file:        
+    # with open("/Users/ju30n/DD1320_applied_CS/Laboration6/unique_tracks.txt", "r", encoding="utf-8") as file:
+    with open(r"C:\Users\joong\Desktop\DD1320\DD1320_applied_CS\Laboration6\unique_tracks.txt", "r", encoding="utf-8") as file:
         for line in file:
             part = line.strip().split("<SEP>")
-                                #trackid , songtime artistname title
+                                #trackid , songtime artistname titles
             song_list.append(Song(part[0],part[1],part[2],part[3]))
     return song_list
 
@@ -87,6 +88,7 @@ def partitionera(data, v, h, pivot_name):
 def selectionSort(alist):#tagen från boken med ändringar så den passar till mitt program
     for fillslot in range(len(alist)-1, 0, -1):#letar efter största värde
         positionOfMax = 0
+        print(positionOfMax)
         for location in range(1, fillslot + 1):#kollar mellan index 1 och fillslot + 1
             if alist[positionOfMax] < alist[location]:#om man hittar något större så byt platserna
                 positionOfMax = location
@@ -95,7 +97,7 @@ def selectionSort(alist):#tagen från boken med ändringar så den passar till m
 
 def main():
 
-    n = 1000000
+    n = 100000
 
 
     storLista = readfile()
@@ -139,7 +141,7 @@ main()
 #
 #   n = 1000        n=10000         n=100000        n=1000000
 #q  0.00066         0.00918         0.13436         2.678
-#s  0.03181         3.7236          tog för lång tid mer än 5 min 
+#s  0.03181         3.7236          1559.8042015           tog för lång tid mer än 5 min 
 #
 #
 

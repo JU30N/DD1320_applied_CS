@@ -40,8 +40,8 @@ def makechildren(start_node, end_word, q):#sov, blå, tom
     #print(start_node_word)
     #print(start_word_list)
     if start_node_word == end_word:
-                writechain(start_node)#newnode => word = son och parent = sov
-                raise SolutionFound
+        writechain(start_node)#newnode => word = son och parent = sov
+        raise SolutionFound
     
     for i in range(len(start_word_list)):
         original_char = start_word_list[i]
