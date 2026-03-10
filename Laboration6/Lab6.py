@@ -97,7 +97,7 @@ def selectionSort(alist):#tagen från boken med ändringar så den passar till m
 
 def main():
 
-    n = 100000
+    n = 1000
 
 
     storLista = readfile()
