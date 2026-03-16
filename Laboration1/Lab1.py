@@ -36,7 +36,7 @@ def main():
 
     planeterna = None
     
-    with open("c:/Users/joong/Desktop/DD1320/DD1320_applied_CS/Laboration1.py/Lab1_files.txt", "r") as file:
+    with open("C:\School\DD1320_applied_CS\Laboration1\Lab1_files.txt", "r") as file:
         lines = file.readlines()
         #print(lines)
     #print(len(lines))
