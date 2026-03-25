@@ -12,7 +12,7 @@
 
 
 
-atom_list = "H   He  Li  Be  B   C   N   O   F   Ne  Na  Mg  Al  Si  P   S   Cl  Ar  K   Ca  Sc  Ti  V   Cr  Mn  Fe  Co  Ni  Cu  Zn  Ga  Ge  As  Se  Br  Kr  Rb  Sr  Y   Zr  Nb  Mo  Tc  Ru  Rh  Pd  Ag  Cd In  Sn  Sb  Te  I   Xe  Cs  Ba  La  Ce  Pr  Nd  Pm  Sm  Eu  Gd  Tb  Dy  Ho  Er  Tm  Yb  Lu  Hf Ta  W   Re  Os  Ir  Pt  Au  Hg  Tl  Pb  Bi  Po  At  Rn  Fr  Ra  Ac  Th  Pa  U   Np  Pu  Am  Cm Bk  Cf  Es  Fm  Md  No  Lr  Rf  Db  Sg  Bh  Hs  Mt  Ds  Rg  Cn  Fl  Lv"
+atom_list = "H   He  Li  Be  B   C   N   O   F   Ne  Na  Mg  Al  Si  P   S   Cl  Ar  K   Ca  Sc  Ti  V   Cr  Mn  Fe  Co  Ni  Cu  Zn  Ga  Ge  As  Se  Br  Kr  Rb  Sr  Y   Zr  Nb  Mo  Tc  Ru  Rh  Pd  Ag  Cd In  Sn  Sb  Te  I   Xe  Cs  Ba  La  Ce  Pr  Nd  Pm  Sm  Eu  Gd  Tb  Dy  Ho  Er  Tm  Yb  Lu  Hf Ta  W   Re  Os  Ir  Pt  Au  Hg  Tl  Pb  Bi  Po  At  Rn  Fr  Ra  Ac  Th  Pa  U   Np  Pu  Am  Cm Bk  Cf  Es  Fm  Md  No  Lr  Rf  Db  Sg  Bh  Hs  Mt  Ds  Rg  Cn  Fl  Lv".split()
 
 class Syntaxerror(Exception):
     pass
@@ -42,7 +42,7 @@ class Molekyl_syntax:
     def read_line(self):
         self.readmol()
         if self.peek() != "":
-            raise SyntaxError("Felaktig gruppstart")
+            raise Syntaxerror("Felaktig gruppstart")
 
     def readatom(self):
         atom = self.pop()
@@ -50,23 +50,23 @@ class Molekyl_syntax:
             atom += self.pop()
 
         if atom not in atom_list:
-            raise SyntaxError("Okänd atom")
+            raise Syntaxerror("Okänd atom")
 
     def readnum(self):
         o = self.peek()
 
         if o == "0":
             self.pop()
-            raise SyntaxError("För litet tal")
+            raise Syntaxerror("För litet tal")
         
         number_str = ""
         while self.peek().isdigit():
             number_str += self.pop()
         
         if not number_str:
-            raise SyntaxError("Saknad siffra")
+            raise Syntaxerror("Saknad siffra")
         if int(number_str) < 2:
-            raise SyntaxError("För litet tal")
+            raise Syntaxerror("För litet tal")
     
     def get_remaining(self):
         return self.line_str[self.index:]
@@ -80,7 +80,7 @@ class Molekyl_syntax:
                 self.pop()
                 self.readnum()#läsnummer
             else:
-                raise SyntaxError("Saknad högerparentes")
+                raise Syntaxerror("Saknad högerparentes")
             
         elif j.isalpha() and j.isupper():#kollar om enbart bokstäver och om det är uppper 
             self.readatom()
@@ -88,10 +88,10 @@ class Molekyl_syntax:
                 self.readnum()
 
         elif j.isalpha() and j.islower():
-            raise SyntaxError("Saknad stor bokstav")
+            raise Syntaxerror("Saknad stor bokstav")
         
         else:
-            raise SyntaxError("Felaktig gruppstart")
+            raise Syntaxerror("Felaktig gruppstart")
 
 
 def main():
@@ -107,10 +107,10 @@ def main():
 
                 try:
                     hypotes_molekyl.read_line()
-                    print("Formeln är sytaktiskt korrekt")
-                except SyntaxError as e:
-                    print(f"{e} vidd radslutet {hypotes_molekyl.get_remaining()}")
+                    print("Formeln är syntaktiskt korrekt")
+                except Syntaxerror as e:
+                    print(f"{e} vid radslutet {hypotes_molekyl.get_remaining()}")
         except:
-            pass
+            break
 
 main()
