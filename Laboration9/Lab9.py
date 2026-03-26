@@ -1,4 +1,4 @@
-
+import unittest
 
 "<formel>::= <mol> \n"
 "<mol>   ::= <group> | <group><mol>"
@@ -43,15 +43,19 @@ class Molekyl_syntax:
         self.readmol()
         if self.peek() != "":
             raise Syntaxerror("Felaktig gruppstart")
-
+    
+    def read_small_letter(self):
+        self.pop()#problem om man återanvänder pga dequeue
+    
     def readatom(self):
-        atom = self.pop()
-        if self.peek().isalpha() and self.peek().islower():#kollar om gemensamt som Na
-            atom += self.pop()
-
-        if atom not in atom_list:
+        atom_str = self.pop()  # Vi vet att detta är en stor bokstav pga read_whole_line
+        
+        if self.peek().islower():
+            atom_str += self.pop()
+            
+        if atom_str not in atom_list:
             raise Syntaxerror("Okänd atom")
-
+    
     def readnum(self):
         o = self.peek()
 
@@ -92,7 +96,15 @@ class Molekyl_syntax:
         
         else:
             raise Syntaxerror("Felaktig gruppstart")
-
+def check_for(fstr):
+    if fstr == "#":
+        return ""
+    m = Molekyl_syntax(fstr)
+    try:
+        m.read_line()
+        return "Formeln är syntaktiskt korrekt"
+    except Syntaxerror as e:
+        return f"{e} vid radslutet {m.get_remaining()}"
 
 def main():
     while True:
@@ -113,4 +125,16 @@ def main():
         except:
             break
 
-main()
+
+#main()
+class TestMole(unittest.TestCase):
+    def test_del1(self):
+        self.assertEqual(check_for("Na"), "Formeln är syntaktiskt korrekt")
+        self.assertEqual(check_for("H2O"), "Formeln är syntaktiskt korrekt")
+    
+    def test_del2(self):
+        self.assertEqual(check_for("C(Xx4)5"), "Okänd atom vid radslutet 4)5")
+        self.assertEqual(check_for("Nacl"), "Saknad stor bokstav vid radslutet cl")
+
+
+unittest.main()

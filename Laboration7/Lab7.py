@@ -32,7 +32,7 @@ class Drama:
 
 def main_del2():
     drama_table = Hashtable(20)
-    with open(r"C:\Users\joong\Desktop\DD1320\DD1320_applied_CS\Laboration7\kdramaMini.txt", mode="r", encoding="utf-8") as file:
+    with open(r"/Users/ju30n/DD1320_applied_CS/Laboration7/kdramaMini.txt", mode="r", encoding="utf-8") as file:
         for line in file:
             #print(line)
             line_data = line.strip().split(",")
@@ -53,7 +53,7 @@ def main_del2():
 
 def main_del1():
     drama_dict = DictHash()
-    with open(r"C:\Users\joong\Desktop\DD1320\DD1320_applied_CS\Laboration7\kdramaMini.txt", mode="r", encoding="utf-8") as file:
+    with open(r"/Users/ju30n/DD1320_applied_CS/Laboration7/kdramaMini.txt", mode="r", encoding="utf-8") as file:
         for line in file:
             #print(line)
             line_data = line.strip().split(",")
@@ -97,7 +97,4 @@ def main():
                 print(f'{key}: {value}')
             except KeyError:
                 print('KeyError:', key)
-
-
-if __name__ == "__main__":
-    main()
+main()

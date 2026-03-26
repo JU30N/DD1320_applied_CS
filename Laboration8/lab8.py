@@ -110,7 +110,7 @@ def read_letter(q):
     q.dequeue()#ta ut ur kön
 
 def read_small_letter(q):
-    q.dequeue()
+    q.dequeue()#problem om man återanvänder pga dequeue
 
 def read_atom(q):
     read_letter(q)#Måste börja med stor bokstav 
@@ -121,6 +121,12 @@ def read_mole(q):#börjar alltid med stor
     read_atom(q)
     if not q.isEmpty():#bör vara tal
         read_num(q)
+
+    if not q.isEmpty():
+        if q.peek().isupper() or q.peek() == "(":
+            read_mole(q)
+        else:
+            raise Syntaxfel("Felaktig gruppstart")
 
 
 def read_num(q):
@@ -156,6 +162,18 @@ def checking_syntax(mole_str):
         else:
             return str(e)
 
+class TestingMethod(unittest.TestCase):
+    def test_atom(self):
+        atom = checking_syntax("Na")
+        self.assertEqual(atom, "Formeln är syntaktiskt korrekt")
+
+    def test_number(self):
+        number = checking_syntax("Na1")
+        self.assertIn("För litet tal vid radslutet", number)
+
+    def test_mole(self):
+        mole = checking_syntax("Na2H3")
+        self.assertEqual(mole, "Formeln är syntaktiskt korrekt")
 
 def main():
     try:#startar
@@ -171,6 +189,6 @@ def main():
     except:
         pass
 
-main()
+unittest.main()
 
 

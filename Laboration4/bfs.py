@@ -88,3 +88,48 @@ def main():
         print(f"Det hittades lösning mellan {starting_word} och {end_wording}")
 
 main()
+
+
+class TestMoleculeSyntax(unittest.TestCase):
+
+    # Testfall för Sample Input 1 (Korrekta formler)
+    def test_sample_input_1(self):
+        self.assertEqual(check_formula("Na"), "Formeln är syntaktiskt korrekt")
+        self.assertEqual(check_formula("H2O"), "Formeln är syntaktiskt korrekt")
+        self.assertEqual(check_formula("Si(C3(COOH)2)4(H2O)7"), "Formeln är syntaktiskt korrekt")
+        self.assertEqual(check_formula("Na332"), "Formeln är syntaktiskt korrekt")
+
+    # Testfall för Sample Input 2 (Felaktiga formler)
+    def test_sample_input_2(self):
+        test_cases = [
+            ("C(Xx4)5", "Okänd atom vid radslutet 4)5"),
+            ("C(OH4)C", "Saknad siffra vid radslutet C"),
+            ("C(OH4C", "Saknad högerparentes vid radslutet"),
+            ("H2O)Fe", "Felaktig gruppstart vid radslutet )Fe"),
+            ("H0", "För litet tal vid radslutet"),
+            ("H1C", "För litet tal vid radslutet C"),
+            ("H02C", "För litet tal vid radslutet 2C"),
+            ("Nacl", "Saknad stor bokstav vid radslutet cl"),
+            ("a", "Saknad stor bokstav vid radslutet a"),
+            ("(Cl)2)3", "Felaktig gruppstart vid radslutet )3"),
+            (")", "Felaktig gruppstart vid radslutet )"),
+            ("2", "Felaktig gruppstart vid radslutet 2"),
+        ]
+
+        for formula, expected_error in test_cases:
+            with self.subTest(formula=formula):
+                self.assertEqual(check_formula(formula), expected_error)
+
+if __name__ == '__main__':
+    unittest.main()
+
+    def check_formula(formula_string):
+    if formula_string == "#":
+        return ""
+    
+    m = Molekyl_syntax(formula_string)
+    try:
+        m.read_line()
+        return "Formeln är syntaktiskt korrekt"
+    except Syntaxerror as e:
+        return f"{e} vid radslutet {m.get_remaining()}
