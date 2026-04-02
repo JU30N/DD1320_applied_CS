@@ -1,5 +1,5 @@
 from molgrafik import Molgrafik
-
+from hashtest_v2 import skapaAtomlista, lagraHashtabell
 from linkedQ_v2 import LinkedQ
 
 class Ruta:
@@ -101,6 +101,25 @@ def check_syntax(mol):
             return None, f"{str(e)} vid radslutet {rest_str}"
         else:
             return None, f"{str(e)}"
+        
+shl = skapaAtomlista()
+atom_hashtabell = lagraHashtabell(shl)
+def molekylvikt(mol):
+    
+    if mol is None:
+        return 0.0
+    if mol.down is not None:
+        atom_parentes_vikt = molekylvikt(mol.down) * mol.num
+
+    else:
+        atom_vikt = atom_hashtabell.search(mol.atom)
+        atom_parentes_vikt = atom_vikt.vikt * mol.num
+
+    beside_atom = molekylvikt(mol.next)
+
+    total_vikt = atom_parentes_vikt + beside_atom
+
+    return total_vikt
 
 
 
@@ -115,9 +134,15 @@ def main():
             if line != "":
                 mol, resultat = check_syntax(line)
                 print(resultat)
+                #print(mol.down)
 
-                if mol != "":
+                if mol is not None:
                     mg.show(mol)
+                    vikt = molekylvikt(mol)
+                    print(vikt)
+
+
+
         except EOFError:
             break
 
